@@ -1,0 +1,321 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Copyright (c) 2011, 2016, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:c="http://java.sun.com/jsp/jstl/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:rah="http://xmlns.oracle.com/webcenter/resourcehandler"
+          xmlns:wcdc="http://xmlns.oracle.com/webcenter/spaces/taglib">
+  <!--
+    - This template uses a flat list of vertical panelGroupLayouts (DIVs)
+    - for each of the major sections of the page template.  It relies on
+    - CSS to position each of the sections.  The header and footer are
+    - fixed (they do not scroll).
+    -
+    - WCPortalFixedWidth is used to constrain the width of the page.
+    -->
+  <af:pageTemplateDef var="attrs">
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <display-name>Page Template 1</display-name>
+        <facet>
+          <description>The content of the page goes here</description>
+          <display-name>Page Content</display-name>
+          <facet-name>content</facet-name>
+        </facet>
+        <attribute>
+          <attribute-name>showGlobalNav</attribute-name>
+          <attribute-class>boolean</attribute-class>
+          <default-value>true</default-value>
+        </attribute>        
+        <attribute>
+          <attribute-name>showOracleLogo</attribute-name>
+          <attribute-class>boolean</attribute-class>
+          <default-value>false</default-value>
+        </attribute>         
+        <attribute>
+          <attribute-name>pageTitle</attribute-name>
+          <attribute-class>String</attribute-class>
+        </attribute>        
+        <attribute>
+          <attribute-name>showFooter</attribute-name>
+          <attribute-class>boolean</attribute-class>
+          <default-value>true</default-value>
+        </attribute>
+      </component>
+    </af:xmlContent>
+    <!--
+     - Begin template.  There are 6 sections:
+     - 1) Preamble - required
+     - 2) Banner Top - page title, search, global navigation
+     - 3) Banner Bottom - portal navigation, portal actions
+     - 4) Navigation and Content - the embedded page
+     - 5) Footer - links
+     - 6) Postamble - required
+     -->
+    <af:panelGroupLayout id="ptlbody" layout="vertical"
+                         styleClass="#{wcpContent.isContributionMode ? 'WCPortalCC' : ''} WCPortalBody WCPortalStickyFooter WCNonEditableArea WCSiteTemplateRoot">
+    <af:panelGroupLayout id="ptlsbox" layout="vertical" inlineStyle="min-height:100%;position:relative;overflow:auto">
+      <!-- 1) Preamble -->
+      <af:panelGroupLayout styleClass="WCPortalPreamble"
+                           inlineStyle="display:none;" id="pt_pre">
+        <wcdc:siteTemplateMetadata type="start"/>
+      </af:panelGroupLayout>
+      <!-- Portal Toolbar -->
+      <af:panelGroupLayout id="pt_tb" styleClass="WCEditableArea">
+      <wcdc:portalToolbar id="ptbdc"/>
+      </af:panelGroupLayout>
+      <!-- 2) Banner Top (black) -->
+      <af:panelGroupLayout layout="vertical" id="bantop"
+                           styleClass="WCPortalBannerTop">
+        <c:set var="trnum" value="#{userPreferences.accessibilityLargeFontProfile == true? (portalToolbarContext.portalToolbar.editMode ? '12':'15'):'30'}"/>
+        <af:panelGroupLayout id="globalPanel" layout="vertical"
+                             styleClass="WCPortalFixedWidth">
+          <!-- Upper Left area -->
+          <af:panelGroupLayout id="portalLogo" rendered="#{!attrs.showOracleLogo}"
+                               styleClass="WCPortalGlobalLogo">
+            <!-- Logo -->
+            <af:link destination="#{WCAppContext.currentScope.default ? boilerBean.globalLogoURI : boilerBean.globalLogoURIInSpace}"
+                       id="gtbpgl1"  styleClass="WCPortalLogo" disabled="#{changeModeBean.inEditMode or serviceCtx.scope.spaceTemplate}">
+              <wcdc:spacesLogo id="gtbpgl2" type="icon" inlineStyle="height:24px;"/>
+            </af:link>
+            <!-- Title -->
+            <af:spacer width="5" height="10" id="pt_s7"/>
+              <af:link destination="#{WCAppContext.currentScope.default ? boilerBean.globalLogoURI : boilerBean.globalLogoURIInSpace}"
+                       id="portalTitle" styleClass="WCPortalGlobalText"
+                       disabled="#{changeModeBean.inEditMode or serviceCtx.scope.spaceTemplate}">
+                <af:outputText id="portalTitleText"
+                               value="#{serviceCtx.scope.spaceTemplate ? WCTruncator[spaceTemplateManager.template[WCAppContext.currentScope.name].GSMetadata.displayName][trnum] : !(empty spaceContext.currentSpace) ? WCTruncator[spaceContext.space[serviceCtx.scope.name].displayName][trnum] : WCTruncator[WCAppContext.application.applicationConfig.title][trnum]}"
+                               styleClass="WCPortalTitle"
+                               shortDesc="#{serviceCtx.scope.spaceTemplate ? WCTruncator[spaceTemplateManager.template[WCAppContext.currentScope.name].GSMetadata.displayName]['30'] : !(empty spaceContext.currentSpace) ? WCTruncator[spaceContext.space[serviceCtx.scope.name].displayName]['30'] : WCTruncator[WCAppContext.application.applicationConfig.title]['30']}"/>
+                <af:panelGroupLayout id="gtbppgl2" layout="default" rendered="#{WCAppContext.currentScope.default}">
+                  <af:outputText id="spac1" value=" > " styleClass="WCPortalTitleSeparator"/>
+                  <af:outputText id="portalTitleSubText" value="#{uib_o_w_w_r_WebCenter.LABEL_HOME_SPACE}"
+                                 styleClass="WCPortalSubTitle"/>
+                </af:panelGroupLayout>
+              </af:link>
+            </af:panelGroupLayout>
+          <af:panelGroupLayout id="oracleLogo" rendered="#{attrs.showOracleLogo}"
+                               styleClass="WCPortalGlobalLogo">
+            <!-- Oracle Logo -->
+            <af:link destination="#{boilerBean.globalLogoURIInSpace}"
+                     id="gtbpgl3" styleClass="WCPortalLogo"
+                     disabled="#{changeModeBean.inEditMode}">
+              <af:image id="logoimg" source="/adf/images/t.gif"
+                        styleClass="WCPortalOracleLogo"
+                        shortDesc="#{not empty attrs.pageTitle ? attrs.pageTitle : WCTruncator[spaceContext.space[WCAppContext.currentScope.name].displayName]}"/>
+            </af:link>
+            <!--  Title -->
+            <af:spacer width="5" height="10" id="pt_s8"/>
+              <af:link destination="#{WCAppContext.currentScope.default ? boilerBean.globalLogoURI : boilerBean.globalLogoURIInSpace}"
+                       id="oracleTitle" styleClass="WCPortalGlobalText" disabled="#{serviceCtx.scope.spaceTemplate}">
+                 <af:outputText id="oracleTitleText"
+                               value="#{serviceCtx.scope.spaceTemplate ? WCTruncator[spaceTemplateManager.template[WCAppContext.currentScope.name].GSMetadata.displayName][trnum] : !(empty spaceContext.currentSpace) ? WCTruncator[spaceContext.space[serviceCtx.scope.name].displayName][trnum] : WCTruncator[WCAppContext.application.applicationConfig.title][trnum]}"
+                               styleClass="WCPortalTitle"
+                               shortDesc="#{serviceCtx.scope.spaceTemplate ? WCTruncator[spaceTemplateManager.template[WCAppContext.currentScope.name].GSMetadata.displayName]['30'] : !(empty spaceContext.currentSpace) ? WCTruncator[spaceContext.space[serviceCtx.scope.name].displayName]['30'] : WCTruncator[WCAppContext.application.applicationConfig.title]['30']}"/>                               
+              </af:link>
+            </af:panelGroupLayout>
+          <!-- Upper Right area -->
+          <af:panelGroupLayout id="globalArea">
+            <!-- Global Links -->
+            <af:panelList id="globLinks" styleClass="WCPortalHeaderNav">
+              <!-- Search Task Flow -->
+              <af:region value="#{bindings.localToolbarSearch.regionModel}"
+                         id="searchbox"/>
+              <wcdc:spacesSwitcher id="wcCmdLinkGSSwit" immediate="true"
+                                   styleClass="WCLinkMenu"
+                                   popupContentDelivery="lazy"
+                                   inlineStyle="white-space:nowrap;"
+                                   text="#{uib_o_w_s_r_Spaces.LABEL_COMMUNITIES}"
+                                   shortDesc="#{uib_o_w_s_r_Spaces.LABEL_COMMUNITIES_DESC}"/>
+              <wcdc:favoritesMenu id="wcCmdLinkGSFav"
+                                  __taskFlowId="favoritesTaskFlow"
+                                  immediate="true"
+                                  inlineStyle="white-space:nowrap;"
+                                  text="#{uib_o_w_w_r_WebCenter.LABEL_FAVORITES}"
+                                  rendered="#{security.homeSpaceEnabled or security.webCenterAdministrator}"
+                                  shortDesc="#{uib_o_w_w_r_WebCenter.LABEL_FAVORITES_DESC}"/>
+              <af:region value="#{bindings.languageSelectorRegion.regionModel}"
+                         id="lang" rendered="#{!security.authenticated}"/>
+              <af:spacer styleClass="WCGlobalNavSeparator" id="pbtsep"/>
+              <!-- Adminstration -->
+              <wcdc:spacesAction id="wcAdminLink" type="administration"
+                                 immediate="false"
+                                 inlineStyle="white-space:nowrap;"
+                                 text="#{uib_o_w_w_r_WebCenter.GLOBAL_LINK_ADMINISTRATION}"
+                                 shortDesc="#{uib_o_w_w_r_WebCenter.GLOBAL_LINK_ADMINISTRATION_DESC}"/>
+              <af:spacer styleClass="WCGlobalNavSeparator" id="pbtsep2"
+                         rendered="#{security.webCenterConfigAllowed and security.authenticated}"/>
+              <!-- Global help Menu-->
+              <wcdc:spacesAction id="globalHelpmn" type="globalHelp"
+                                   text="#{uib_o_w_w_r_WebCenter.LABEL_HELP}"
+                                   shortDesc="#{uib_o_w_w_r_WebCenter.LABEL_HELP_DESC}"
+                                   inlineStyle="white-space:nowrap"
+                                   styleClass="WCLinkMenu"
+                                   displayType="menu"/>
+              <!-- Login -->
+              <wcdc:spacesAction id="wcLoginLink" type="login"
+                                 inlineStyle="white-space:nowrap"
+                                 text="#{uib_o_w_w_r_WebCenter.GLOBAL_LINK_LOGIN}"
+                                 shortDesc="#{uib_o_w_w_r_WebCenter.GLOBAL_LINK_LOGIN}"/>
+              <!-- User Menu-->
+                <af:panelGroupLayout id="userpgl" rendered="#{security.authenticated}">
+                  <af:commandImageLink iconPosition="trailing"
+                                       id="userMenuLink"
+                                       inlineStyle="white-space:nowrap;"
+                                       shortDesc="#{uib_o_w_w_r_WebCenter.LABEL_USER_MENU}"
+                                       styleClass="#{attrs.styleClass} WCLinkMenu"
+                                       immediate="true"
+                                       text="#{security.userDisplayName}">
+                    <af:showPopupBehavior popupId="userMenuPopup"
+                                          alignId="userMenuLink"
+                                          align="beforeEnd"/>
+                  </af:commandImageLink>
+                  <af:popup id="userMenuPopup">
+                    <af:menu id="pt_m1">
+                      <wcdc:userProfile id="currUserWcLink"
+                                        styleClass="WCPortalProfileLink"
+                                        immediate="true"
+                                        text="#{uib_o_w_w_r_WebCenter.TITLE_USER_PROFILE}"
+                                        displayType="menuItem"
+                                        shortDesc="#{security.userDisplayName}"/>
+                      <wcdc:userPreferences id="wcPreferLink"
+                                            __taskFlowId="preferenceRegion"
+                                            inlineStyle="white-space:nowrap;"
+                                            text="#{uib_o_w_w_r_WebCenter.GLOBAL_LINK_PREFERENCES}"
+                                            displayType="menuItem"
+                                            shortDesc="#{uib_o_w_w_r_WebCenter.GLOBAL_LINK_PREFERENCES_DESC}"/>
+                      <wcdc:spacesAction id="wcLogoutLink" type="logout"
+                                         inlineStyle="white-space:nowrap"
+                                         text="#{uib_o_w_w_r_WebCenter.GLOBAL_LINK_LOGOUT}"
+                                         displayType="menuItem"
+                                         shortDesc="#{uib_o_w_w_r_WebCenter.GLOBAL_LINK_LOGOUT_DESC}"/>
+                    </af:menu>
+                  </af:popup>
+                </af:panelGroupLayout>
+                <af:spacer id="sep1" width="5"/>
+              <!-- Status Indicator -->
+              <af:statusIndicator id="statInd"/>
+            </af:panelList>
+          </af:panelGroupLayout>
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- 3) Banner Bottom (blue) -->
+      <af:panelGroupLayout layout="vertical" id="banbot" rendered="#{attrs.showGlobalNav}"
+                           styleClass="WCPortalBannerBottom">
+        <af:switcher facetName="#{requestContext.rightToLeft? 'rtl' : 'ltr'}">
+          <f:facet name="ltr">
+            <af:panelGroupLayout id="navPanel" layout="vertical"
+                                 styleClass="WCPortalFixedWidth">
+              <af:region value="#{bindings.portaltopnavigation.regionModel}"
+                         id="spnvpn" inlineStyle="margin-right:45px;"/>
+              <af:panelGroupLayout layout="vertical" id="pglbl"
+                                   inlineStyle="position:absolute;top:0px;right:0px;margin-top:3px;">
+                <af:button icon="#{requestContext.rightToLeft ? '/adf/webcenter/agentdropdown_rtl_sm_ena.png' : '/adf/webcenter/agentdropdown_sm_ena.png'}"
+                           styleClass="WCActionsButton"
+                           id="actionsMenuLink"
+                           shortDesc="#{uib_o_w_w_r_WebCenter['NAV_TOOLS_ACTIONS_FOLDER.DESCRIPTION']}"
+						   disabled="#{portalToolbarContext.portalToolbar.editMode}"
+                           clientComponent="true"
+                           rendered="#{!serviceCtx.scope.spaceTemplate and (WCAppContext.currentScope.default ? ((!AdminConfig.fusionAppsMode and security.homeSpaceEnabled) or security.webCenterAdministrator): empty pageFlowScope.contextActionsTaskFlow)}">
+                  <af:showPopupBehavior popupId="actnRegion:actionsDropdownPopup"
+                                        alignId="actionsMenuLink"
+                                        align="afterStart"/>
+                </af:button>
+                <af:region value="#{bindings.spacesActionSubmenu.regionModel}"
+                           id="actnRegion"
+                           rendered="#{!serviceCtx.scope.spaceTemplate and (WCAppContext.currentScope.default ? ((!AdminConfig.fusionAppsMode and security.homeSpaceEnabled) or security.webCenterAdministrator): true)}"/>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+          </f:facet>
+          <f:facet name="rtl">
+            <af:panelGroupLayout id="navPanelRtl" layout="vertical"
+                                 styleClass="WCPortalFixedWidth">
+              <af:panelGroupLayout layout="vertical" id="pglblRtl"
+                                   inlineStyle="position:absolute;top:0px;left:0px;margin-top:3px;">
+                <af:button icon="#{requestContext.rightToLeft ? '/adf/webcenter/agentdropdown_rtl_sm_ena.png' : '/adf/webcenter/agentdropdown_sm_ena.png'}"
+                           styleClass="WCActionsButton"
+                           id="actionsMenuLinkRtl"
+                           shortDesc="#{uib_o_w_w_r_WebCenter['NAV_TOOLS_ACTIONS_FOLDER.DESCRIPTION']}"
+                           clientComponent="true"
+                           rendered="#{!serviceCtx.scope.spaceTemplate and (WCAppContext.currentScope.default ? ((!AdminConfig.fusionAppsMode and security.homeSpaceEnabled) or security.webCenterAdministrator): empty pageFlowScope.contextActionsTaskFlow)}">
+                   <af:showPopupBehavior popupId="actnRegionRtl:actionsDropdownPopup"
+                                         alignId="actionsMenuLinkRtl"
+                                         align="afterStart"/>
+                </af:button>
+                <af:region value="#{bindings.spacesActionSubmenuRtl.regionModel}"
+                           id="actnRegionRtl"
+                           rendered="#{!serviceCtx.scope.spaceTemplate and (WCAppContext.currentScope.default ? ((!AdminConfig.fusionAppsMode and security.homeSpaceEnabled) or security.webCenterAdministrator): true)}"/>
+              </af:panelGroupLayout>
+              <af:region value="#{bindings.portaltopnavigationRtl.regionModel}"
+                         id="spnvpnRtl" inlineStyle="margin-left:45px;"/>
+            </af:panelGroupLayout>
+          </f:facet>
+        </af:switcher>
+      </af:panelGroupLayout>
+      <!-- 4) Content -->
+      <af:panelGroupLayout layout="vertical" id="container"
+                           styleClass="WCPortalContainer WCContent WCPortalFixedWidth WCEditableArea">
+        <!-- page title/header - keep? -->
+<!--
+        <af:panelGroupLayout layout="vertical" id="pghdr" inlineStyle="height:16px;background-color:#F0F0F0;padding:2px 5px;">
+          <af:outputText id="ot_ph" inlineStyle="font-weight:bold;"
+                         value="#{changeModeBean.inEditMode? uib_o_w_w_r_WebCenter.PAGE_HEADER: navigationContext.currentNavigationModel.currentSelection.selected?navigationContext.currentNavigationModel.currentSelection.title:''}"/>
+        </af:panelGroupLayout>
+-->
+        <af:skipLinkTarget/>
+        <af:facetRef facetName="content"/>
+      </af:panelGroupLayout>
+      <!-- 5) Footer -->
+      <af:panelGroupLayout id="footer" layout="vertical"
+                           rendered="#{attrs.showFooter and (changeModeBean.inEditMode or (WCAppContext.currentScope.default and !WCAppContext.application.applicationConfig.footerHidden) or (!WCAppContext.currentScope.default and boilerBean.footerDisplayedInSpace))}"
+                           styleClass="WCPortalFooter">
+        <af:switcher facetName="#{empty WCAppContext.currentPageTemplate.attributesMap['footerNavigationFile'].value}">
+          <f:facet name="false">
+            <!-- Footer links from navigation model -->
+            <wcdc:footerNavigation id="footnav1"
+                                   __taskFlowId="navigationrenderer1"
+                                   navigationModel="modelPath=#{WCAppContext.currentPageTemplate.attributesMap['footerNavigationFile'].value}"/>
+          </f:facet>
+          <f:facet name="true">
+            <af:panelGroupLayout id="pt_pgl1" layout="vertical">
+              <!-- Footer standard links -->
+              <af:panelList id="footerPl"
+                            styleClass="WCPortalFooterNav WCPortalFixedWidth"
+                            rendered="#{empty WCAppContext.currentPageTemplate.attributesMap['footerNavigationFile'].value}">
+                <wcdc:spacesAction id="aboutWcLink" type="aboutWebcenter"
+                                   text="#{uib_o_w_w_r_WebCenter.GLOBAL_LINK_ABOUT}"
+                                   shortDesc="#{uib_o_w_w_r_WebCenter.GLOBAL_LINK_ABOUT_DESC}"/>
+                <wcdc:spacesAction id="wcRssLink" type="rss"
+                                   text="#{uib_o_w_w_r_WebCenter.GLOBAL_LINK_RSS}"
+                                   shortDesc="#{uib_o_w_w_r_WebCenter.GLOBAL_LINK_RSS_DESC}"/>
+                <wcdc:spacesAction id="wcconAdminLink" type="contactAdmin"
+                                   text="#{uib_o_w_w_r_WebCenter.CONTACT_ADMINISTRATOR}"
+                                   shortDesc="#{uib_o_w_w_r_WebCenter.CONTACT_ADMINISTRATOR_DESC}"/>
+                <af:link text="#{uib_o_w_w_r_WebCenter.PRIVACY_STMT}"
+                         shortDesc="#{uib_o_w_w_r_WebCenter.PRIVACY_STMT_DESC}"
+                         destination="#{WCAppContext.currentScope.default ? boilerBean.privacyURL : boilerBean.privacyURLInSpace}"
+                         rendered="#{WCAppContext.currentScope.default ? not empty boilerBean.privacyURL : not empty boilerBean.privacyURLInSpace}"
+                         targetFrame="_blank" id="wcPriLink"/>
+              </af:panelList>
+              <!-- Footer copyright -->
+              <af:panelGroupLayout id="cprtpgl" layout="vertical" styleClass="WCPortalFooterNav WCPortalFixedWidth">
+                <af:outputFormatted id="cpyrght"
+                                    rendered="#{WCAppContext.currentScope.default ? not empty boilerBean.copyrightMessage : not empty boilerBean.copyrightMessageInSpace}"
+                                    value="#{WCAppContext.currentScope.default ? boilerBean.copyrightMessage : boilerBean.copyrightMessageInSpace}"/>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+          </f:facet>
+        </af:switcher>
+      </af:panelGroupLayout>
+      <!-- 6) Postamble -->
+      <af:panelGroupLayout layout="vertical" styleClass="WCPortalPostamble"
+                           inlineStyle="display:none;" id="pt_post">
+        <wcdc:siteTemplateMetadata type="end"/>
+      </af:panelGroupLayout>
+    </af:panelGroupLayout>
+    </af:panelGroupLayout>
+  </af:pageTemplateDef>
+</jsp:root>

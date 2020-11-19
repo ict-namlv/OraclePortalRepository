@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Application xmlns="http://xmlns.oracle.com/adfm/application" version="12.2.1.22.48" id="DataBindings"
+             SeparateXMLFiles="false" Package="portal" ClientType="Generic">
+  <pageMap>
+    <page path="/pageTemplate1/PageTemplate1.jspx" usageId="portal_PageTemplate1PageDef"/>
+  </pageMap>
+  <pageDefinitionUsages>
+    <page id="portal_PageTemplate1PageDef" path="pageTemplate1.PageTemplate1PageDef"/>
+  </pageDefinitionUsages>
+</Application>

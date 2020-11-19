@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns0:pageTemplate xmlns:ns0="http://xmlns.oracle.com/webcenter/assetpublishing/assetdef">
+   <name>PageTemplate1</name>
+   <displayName>Page Template 1</displayName>
+   <sourcePath>/pageTemplate1</sourcePath>
+   <pagePath>PageTemplate1.jspx</pagePath>
+   <pageDefinitionPath>PageTemplate1PageDef.xml</pageDefinitionPath>
+</ns0:pageTemplate>
