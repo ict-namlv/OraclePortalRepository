@@ -2,7 +2,12 @@
 <!DOCTYPE html>
 <f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
     <af:document title="login.jsf" id="d1" binding="#{backingBeanScope.backing_login.d1}">
-        <af:form id="f1" binding="#{backingBeanScope.backing_login.f1}"></af:form>
+        <af:form id="f1" binding="#{backingBeanScope.backing_login.f1}">
+            <af:inputText label="User name" id="txtUserName" binding="#{backingBeanScope.backing_login.txtUserName}"/>
+            <af:inputText label="Password" id="txtPass" binding="#{backingBeanScope.backing_login.txtPass}"/>
+            <af:button text="Login" id="btnLogin" binding="#{backingBeanScope.backing_login.btnLogin}"
+                       action="#{backingBeanScope.backing_login.btnLogin_action}"/>
+        </af:form>
     </af:document>
     <!--oracle-jdev-comment:auto-binding-backing-bean-name:backing_login-->
 </f:view>
