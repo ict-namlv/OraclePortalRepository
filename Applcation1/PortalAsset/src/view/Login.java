@@ -58,11 +58,11 @@ public class Login {
         return txtPass;
     }
 
-    public void setB1(RichButton b1) {
-        this.btnLogin = b1;
+    public void setBtnLogin(RichButton btnLogin) {
+        this.btnLogin = btnLogin;
     }
 
-    public RichButton getB1() {
+    public RichButton getBtnLogin() {
         return btnLogin;
     }
 
