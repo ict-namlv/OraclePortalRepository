@@ -12,4 +12,10 @@
     <managed-bean-scope>backingBean</managed-bean-scope>
     <!--oracle-jdev-comment:managed-bean-jsp-link:1index.jsf-->
   </managed-bean>
+  <managed-bean id="__3">
+    <managed-bean-name>backing_about</managed-bean-name>
+    <managed-bean-class>view.About</managed-bean-class>
+    <managed-bean-scope>backingBean</managed-bean-scope>
+    <!--oracle-jdev-comment:managed-bean-jsp-link:1about.jsf-->
+  </managed-bean>
 </adfc-config>
