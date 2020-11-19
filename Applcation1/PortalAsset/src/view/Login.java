@@ -1,11 +1,18 @@
 package view;
 
+import java.io.IOException;
+
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+
+import javax.servlet.http.HttpServletResponse;
+
+import javax.servlet.http.HttpSession;
+
 import oracle.adf.view.rich.component.rich.RichDocument;
 import oracle.adf.view.rich.component.rich.RichForm;
 import oracle.adf.view.rich.component.rich.input.RichInputText;
 import oracle.adf.view.rich.component.rich.nav.RichButton;
-import oracle.adf.view.rich.component.rich.output.RichActiveOutputText;
-import oracle.adf.view.rich.component.rich.output.RichOutputText;
 
 public class Login {
     @SuppressWarnings("org.adfemg.audits.java.comp-ref")
@@ -62,6 +69,19 @@ public class Login {
 
     public String btnLogin_action() {
         // Add event code here...
+        FacesContext fct = FacesContext.getCurrentInstance();
+        ExternalContext ect = fct.getExternalContext();
+        String Url = ect.getRequestContextPath() + "/faces/index.jsf";
+        HttpServletResponse response = (HttpServletResponse) ect.getResponse();
+        HttpSession session = (HttpSession) ect.getSession(false);
+        // Close session
+        session.invalidate();
+        try {
+            response.sendRedirect(Url);
+            fct.responseComplete();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 }
