@@ -348,6 +348,27 @@
                <value n="description" v="Library3"/>
                <value n="id" v="Library3"/>
             </hash>
+            <hash>
+               <list n="classPath">
+                  <url path="../../../../../webcenter/modules/oracle.webcenter.framework/rtc-taglib.jar" jar-entry=""/>
+               </list>
+               <value n="description" v="Library4"/>
+               <value n="id" v="Library4"/>
+            </hash>
+            <hash>
+               <list n="classPath">
+                  <url path="../../../../../webcenter/modules/oracle.webcenter.framework/spaces-components.jar" jar-entry=""/>
+               </list>
+               <value n="description" v="Library5"/>
+               <value n="id" v="Library5"/>
+            </hash>
+            <hash>
+               <list n="classPath">
+                  <url path="../../../../../../oracle_common/modules/oracle.wccore/composer-decl-comp.jar" jar-entry=""/>
+               </list>
+               <value n="description" v="Library6"/>
+               <value n="id" v="Library6"/>
+            </hash>
          </list>
       </hash>
       <list n="libraryReferences">
@@ -686,6 +707,26 @@
             <value n="URI" v="http://xmlns.oracle.com/dss/adf/faces"/>
             <value n="version" v="1.1"/>
          </hash>
+         <hash>
+            <value n="libraries" v="ADF Faces Components"/>
+            <value n="name" v="rtc"/>
+            <value n="prefix" v="rtc"/>
+            <value n="runInEditor" v="true"/>
+            <value n="showInPalette" v="true"/>
+            <value n="taglibURL" v="@project@../../../../../webcenter/modules/oracle.webcenter.framework/rtc-taglib.jar!/META-INF/rtc.taglib.xml"/>
+            <value n="URI" v="http://xmlns.oracle.com/webcenter/collab/rtc"/>
+            <value n="version" v="2.0"/>
+         </hash>
+         <hash>
+            <value n="libraries" v="ADF Faces Components"/>
+            <value n="name" v="SpacesDeclarativeComponents"/>
+            <value n="prefix" v="wcdc"/>
+            <value n="runInEditor" v="true"/>
+            <value n="showInPalette" v="true"/>
+            <value n="taglibURL" v="@project@../../../../../webcenter/modules/oracle.webcenter.framework/spaces-components.jar!/META-INF/spacesdeclarativecomponents.taglib.xml"/>
+            <value n="URI" v="http://xmlns.oracle.com/webcenter/spaces/taglib"/>
+            <value n="version" v="2.0"/>
+         </hash>
       </list>
    </hash>
    <hash n="oracle.jdevimpl.webapp.jsp.libraries.model.ProjectTagLibraries">
@@ -780,17 +821,6 @@
          </hash>
          <hash>
             <hash n="baseLibrary">
-               <value n="name" v="WebCenter Portal Declarative Components"/>
-               <value n="version" v="2.1"/>
-            </hash>
-            <value n="jspVersion" v="2.1"/>
-            <value n="name" v="WebCenter Portal Declarative Components"/>
-            <value n="tldURL" v="@oracle.home@webcenter/modules/oracle.webcenter.framework/spaces-components.jar!/META-INF/SpacesDeclarativeComponents.tld"/>
-            <value n="URI" v="http://xmlns.oracle.com/webcenter/spaces/taglib"/>
-            <value n="version" v="2.1"/>
-         </hash>
-         <hash>
-            <hash n="baseLibrary">
                <value n="name" v="WebCenter Shell"/>
                <value n="version" v="2.1"/>
             </hash>
@@ -809,17 +839,6 @@
             <value n="name" v="WebCenter SmartTag"/>
             <value n="tldURL" v="@oracle.home@webcenter/modules/oracle.webcenter.framework/smarttag.jar!/META-INF/smarttag.tld"/>
             <value n="URI" v="http://xmlns.oracle.com/webcenter/collab/smarttag"/>
-            <value n="version" v="12.2.1.4.0"/>
-         </hash>
-         <hash>
-            <hash n="baseLibrary">
-               <value n="name" v="WebCenter IM and Presence Tags"/>
-               <value n="version" v="12.2.1.4.0"/>
-            </hash>
-            <value n="jspVersion" v="2.1"/>
-            <value n="name" v="WebCenter IM and Presence Tags"/>
-            <value n="tldURL" v="@oracle.home@webcenter/modules/oracle.webcenter.framework/rtc-taglib.jar!/META-INF/rtc.tld"/>
-            <value n="URI" v="http://xmlns.oracle.com/webcenter/collab/rtc"/>
             <value n="version" v="12.2.1.4.0"/>
          </hash>
          <hash>
@@ -865,6 +884,17 @@
             <value n="tldURL" v="@oracle.home@../oracle_common/modules/oracle.adf.view/dvt-faces.jar!/META-INF/bi.tld"/>
             <value n="URI" v="http://xmlns.oracle.com/dss/adf/faces"/>
             <value n="version" v="1.1"/>
+         </hash>
+         <hash>
+            <value n="jspVersion" v="2.1"/>
+            <value n="libraries" v="Library6"/>
+            <value n="name" v="ocdecl"/>
+            <value n="prefix" v="pedc"/>
+            <value n="runInEditor" v="true"/>
+            <value n="showInPalette" v="true"/>
+            <value n="tldURL" v="@project@../../../../../../oracle_common/modules/oracle.wccore/composer-decl-comp.jar!/META-INF/ocdecl.tld"/>
+            <value n="URI" v="http://xmlns.oracle.com/adf/pageeditor/declarativecomp"/>
+            <value n="version" v="1.0"/>
          </hash>
       </list>
    </hash>
