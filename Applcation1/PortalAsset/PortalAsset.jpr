@@ -312,6 +312,10 @@
             <value n="id" v="WebCenter Document Library Service View"/>
             <value n="isJDK" v="false"/>
          </hash>
+         <hash>
+            <value n="id" v="Oracle JEWT"/>
+            <value n="isJDK" v="false"/>
+         </hash>
       </list>
       <hash n="internalDefinitions">
          <list n="libraryDefinitions">
@@ -495,6 +499,10 @@
             <value n="id" v="WebCenter Document Library Service View"/>
             <value n="isJDK" v="false"/>
          </hash>
+         <hash>
+            <value n="id" v="Oracle JEWT"/>
+            <value n="isJDK" v="false"/>
+         </hash>
       </list>
    </hash>
    <hash n="oracle.jdevimpl.config.JProjectPaths">
@@ -651,6 +659,16 @@
             <value n="taglibURL" v="@project@../../../../../Oracle/Middleware/Oracle_Home/jdeveloper/webcenter/modules/oracle.webcenter.framework/rtc-taglib.jar!/META-INF/rtc.taglib.xml"/>
             <value n="URI" v="http://xmlns.oracle.com/webcenter/collab/rtc"/>
             <value n="version" v="2.0"/>
+         </hash>
+         <hash>
+            <hash n="baseLibrary">
+               <value n="name" v="ADF Data Visualization"/>
+               <value n="version" v="1.1"/>
+            </hash>
+            <value n="name" v="ADF Data Visualization"/>
+            <value n="taglibURL" v="@oracle.home@../oracle_common/modules/oracle.adf.view/dvt-faces.jar!/META-INF/bi.taglib.xml"/>
+            <value n="URI" v="http://xmlns.oracle.com/dss/adf/faces"/>
+            <value n="version" v="1.1"/>
          </hash>
       </list>
    </hash>
@@ -820,6 +838,17 @@
             <value n="tldURL" v="@oracle.home@webcenter/modules/oracle.webcenter.framework/doclib-service-view.jar!/META-INF/doclib.tld"/>
             <value n="URI" v="http://xmlns.oracle.com/webcenter/doclib"/>
             <value n="version" v="12.2.1.4.0"/>
+         </hash>
+         <hash>
+            <hash n="baseLibrary">
+               <value n="name" v="ADF Data Visualization"/>
+               <value n="version" v="1.1"/>
+            </hash>
+            <value n="jspVersion" v="2.1"/>
+            <value n="name" v="ADF Data Visualization"/>
+            <value n="tldURL" v="@oracle.home@../oracle_common/modules/oracle.adf.view/dvt-faces.jar!/META-INF/bi.tld"/>
+            <value n="URI" v="http://xmlns.oracle.com/dss/adf/faces"/>
+            <value n="version" v="1.1"/>
          </hash>
       </list>
    </hash>
